@@ -1,6 +1,6 @@
 ## Curso "Aprenda a testar Aplicações Javascript".
 
-> Acesse o site do curso: [javascript.tv.br](https://javascript.tv.br)
+Reposiório com as lições do [curso](https://javascript.tv.br)
 
 ### Instalação
 
