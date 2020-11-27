@@ -1,6 +1,6 @@
 ## Curso "Aprenda a testar Aplicações Javascript".
 
-Reposiório com as lições do [curso](https://javascript.tv.br)
+Reposiório com as lições do [curso](https://javascript.tv.br) do @vedovelli
 
 ### Instalação
 
