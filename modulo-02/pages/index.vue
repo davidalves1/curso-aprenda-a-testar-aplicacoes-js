@@ -1,71 +1,69 @@
 <template>
-  <div class="container">
-    <div>
-      <h1 class="title">watch-store</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <main class="my-8">
+    <search @doSearch="setSearchTerm" />
+    <div v-if="errorMessage === ''" class="container mx-auto px-6">
+      <h3 class="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
+      <span
+        data-testid="total-quantity-label"
+        class="mt-3 text-sm text-gray-500"
+        >{{ quantityLabel }}</span
+      >
+      <div
+        class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6"
+      >
+        <product-card
+          v-for="product in list"
+          :key="product.id"
+          :product="product"
+          data-testid="product-card"
+        />
       </div>
     </div>
-  </div>
+    <h3 v-else class="text-center text-2xl">{{ errorMessage }}</h3>
+  </main>
 </template>
 
 <script>
+import ProductCard from '@/components/ProductCard';
+import Search from '@/components/Search';
+
 export default {
-  mounted() {
-    this.$axios.get('/api/movies');
+  components: { ProductCard, Search },
+  data() {
+    return {
+      products: [],
+      errorMessage: '',
+      searchTerm: '',
+    };
+  },
+  computed: {
+    list() {
+      if (this.searchTerm !== '') {
+        return this.products.filter(({ title }) => {
+          return title.includes(this.searchTerm);
+        });
+      }
+      return this.products;
+    },
+    quantityLabel() {
+      const {
+        list: { length },
+      } = this;
+
+      return length === 1 ? `${length} Product` : `${length} Products`;
+    },
+  },
+  async created() {
+    try {
+      this.products = (await this.$axios.get('/api/products')).data.products;
+    } catch (error) {
+      this.errorMessage = 'Problemas ao carregar a lista!';
+    }
+  },
+  methods: {
+    setSearchTerm({ term }) {
+      this.searchTerm = term;
+    },
   },
 };
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

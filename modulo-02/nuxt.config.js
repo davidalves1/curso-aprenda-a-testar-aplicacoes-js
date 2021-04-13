@@ -1,4 +1,6 @@
 export default {
+  // mode: process.env.NODE_ENV === 'production' ? 'universal' : 'spa',
+  ssr: false,
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'watch-store',
@@ -14,7 +16,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['@/plugins/miragejs'],
+  plugins: ['@/plugins/miragejs', '@/plugins/cart'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: false,
