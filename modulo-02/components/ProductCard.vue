@@ -7,7 +7,6 @@
       <button
         class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
         @click="addToCart"
-        data-testid="add-to-cart-button"
       >
         <svg
           class="h-5 w-5"
@@ -42,8 +41,7 @@ export default {
   },
   methods: {
     addToCart() {
-      this.$cart.open();
-      this.$cart.addProduct(this.product);
+      this.$emit('add-to-cart', { product: this.product });
     },
   },
 };
