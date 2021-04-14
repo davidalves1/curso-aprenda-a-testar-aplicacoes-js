@@ -44,8 +44,9 @@ describe('ProductCard', () => {
 
   it('should emmit an event on add item to cart', async () => {
     const { wrapper, product } = mountProductCart();
+    const button = wrapper.find('button');
 
-    await wrapper.find('button').trigger('click');
+    await button.trigger('click');
 
     expect(wrapper.emitted()['add-to-cart']).toBeTruthy();
     expect(wrapper.emitted()['add-to-cart'].length).toBe(1);

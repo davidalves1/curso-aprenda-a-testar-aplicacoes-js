@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     doSearch() {
-      this.$emit('doSearch', { term: this.term });
+      this.$emit('do-search', { term: this.term });
     },
   },
 };
